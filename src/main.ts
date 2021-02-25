@@ -1,6 +1,17 @@
 import * as core from '@actions/core';
 import { installAndroidSdk } from './sdk-installer';
-import { checkApiLevel, checkTarget, checkArch, checkDisableAnimations, checkEmulatorBuild } from './input-validator';
+import {
+  checkApiLevel,
+  checkTarget,
+  checkArch,
+  checkDisableAnimations,
+  checkEmulatorBuild,
+  checkDisableSpellchecker,
+  checkDisableAutofill,
+  checkLongPressTimeout,
+  checkEnableHwKeyboard,
+  checkEnableLogcat
+} from './input-validator';
 import { launchEmulator, killEmulator } from './emulator-manager';
 import * as exec from '@actions/exec';
 import { parseScript } from './script-parser';
@@ -39,6 +50,10 @@ async function run() {
     const profile = core.getInput('profile');
     console.log(`Hardware profile: ${profile}`);
 
+    // Number of cores to use for emulator
+    const cores = core.getInput('cores');
+    console.log(`Cores: ${cores}`);
+
     // SD card path or size used for creating the AVD
     const sdcardPathOrSize = core.getInput('sdcard-path-or-size');
     console.log(`SD card path or size: ${sdcardPathOrSize}`);
@@ -56,6 +71,36 @@ async function run() {
     checkDisableAnimations(disableAnimationsInput);
     const disableAnimations = disableAnimationsInput === 'true';
     console.log(`disable animations: ${disableAnimations}`);
+
+    // disable ime
+    const enableHwKeyboardInput = core.getInput('enable-hw-keyboard');
+    checkEnableHwKeyboard(enableHwKeyboardInput);
+    const enableHwKeyboard = enableHwKeyboardInput === 'true';
+    console.log(`enable hw keyboard: ${enableHwKeyboard}`);
+
+    // enable logcat
+    const enableLogcatInput = core.getInput('enable-logcat');
+    checkEnableLogcat(enableLogcatInput);
+    const enableLogcat = enableLogcatInput === 'true';
+    console.log(`enable logcat: ${enableLogcat}`);
+
+    // disable spellchecker
+    const disableSpellcheckerInput = core.getInput('disable-spellchecker');
+    checkDisableSpellchecker(disableSpellcheckerInput);
+    const disableSpellchecker = disableSpellcheckerInput === 'true';
+    console.log(`disable spellchecker: ${disableSpellchecker}`);
+
+    // disable autofill
+    const disableAutofillInput = core.getInput('disable-autofill');
+    checkDisableAutofill(disableAutofillInput);
+    const disableAutofill = disableAutofillInput === 'true';
+    console.log(`disable autofill: ${disableAutofill}`);
+
+    // update longpress timeout
+    const longPressTimeoutInput = core.getInput('longpress-timeout');
+    checkLongPressTimeout(longPressTimeoutInput);
+    const longPressTimeout = Number(longPressTimeoutInput);
+    console.log(`update longpress-timeout: ${longPressTimeoutInput}`);
 
     // emulator build
     const emulatorBuildInput = core.getInput('emulator-build');
@@ -98,7 +143,22 @@ async function run() {
     await installAndroidSdk(apiLevel, target, arch, emulatorBuild, ndkVersion, cmakeVersion);
 
     // launch an emulator
-    await launchEmulator(apiLevel, target, arch, profile, sdcardPathOrSize, avdName, emulatorOptions, disableAnimations);
+    await launchEmulator(
+      apiLevel,
+      target,
+      arch,
+      profile,
+      cores,
+      sdcardPathOrSize,
+      avdName,
+      emulatorOptions,
+      disableAnimations,
+      disableSpellchecker,
+      disableAutofill,
+      longPressTimeout,
+      enableHwKeyboard,
+      enableLogcat
+    );
 
     // execute the custom script
     try {

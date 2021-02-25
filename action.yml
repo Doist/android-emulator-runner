@@ -16,6 +16,8 @@ inputs:
     default: 'x86'
   profile:
     description: 'hardware profile used for creating the AVD - e.g. `Nexus 6`'
+  cores:
+    description: 'the number of cores to use for the emulator'
   sdcard-path-or-size:
     description: 'path to the SD card image for this AVD or the size of a new SD card image to create for this AVD, in KB or MB, denoted with K or M. - e.g. `path/to/sdcard`, or `1000M`'
   avd-name:
@@ -27,6 +29,21 @@ inputs:
   disable-animations:
     description: 'whether to disable animations - true or false'
     default: 'true'
+  disable-spellchecker: 
+    description: Whether to disable spellchecker - `true` or `false`.
+    default: 'false'
+  disable-autofill:
+    description: Whether to disable autofill - `true` or `false`.
+    default: 'false'
+  longpress-timeout:
+    description: Longpress timeout in milliseconds.
+    default: 500
+  enable-hw-keyboard:
+    description: Enable hw keyboard and disable soft keyboard - `true` or `false`.
+    default: 'false'
+  enable-logcat:
+    description: Enable reading and saving logcat output to `artifacts/logcat.log`.
+    default: 'false'
   emulator-build:
     description: 'build number of a specific version of the emulator binary to use - e.g. `6061023` for emulator v29.3.0.0'
   working-directory:

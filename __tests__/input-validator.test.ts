@@ -103,6 +103,113 @@ describe('disable-animations validator tests', () => {
   });
 });
 
+describe('disable-spellchecker validator tests', () => {
+  it('Throws if disable-spellchecker is not a boolean', () => {
+    const func = () => {
+      validator.checkDisableSpellchecker('yes');
+    };
+    expect(func).toThrowError(`Input for input.disable-spellchecker should be either 'true' or 'false'.`);
+  });
+
+  it('Validates successfully if disable-spellchecker is either true or false', () => {
+    const func1 = () => {
+      validator.checkDisableSpellchecker('true');
+    };
+    expect(func1).not.toThrow();
+
+    const func2 = () => {
+      validator.checkDisableSpellchecker('false');
+    };
+    expect(func2).not.toThrow();
+  });
+});
+
+describe('disable-autofill validator tests', () => {
+  it('Throws if disable-autofill is not a boolean', () => {
+    const func = () => {
+      validator.checkDisableAutofill('yes');
+    };
+    expect(func).toThrowError(`Input for input.disable-autofill should be either 'true' or 'false'.`);
+  });
+
+  it('Validates successfully if disable-autofill is either true or false', () => {
+    const func1 = () => {
+      validator.checkDisableAutofill('true');
+    };
+    expect(func1).not.toThrow();
+
+    const func2 = () => {
+      validator.checkDisableAutofill('false');
+    };
+    expect(func2).not.toThrow();
+  });
+});
+
+describe('enable-hw-keyboard validator tests', () => {
+  it('Throws if enable-hw-keyboard is not a boolean', () => {
+    const func = () => {
+      validator.checkEnableHwKeyboard('yes');
+    };
+    expect(func).toThrowError(`Input for input.enable-hw-keyboard should be either 'true' or 'false'.`);
+  });
+
+  it('Validates successfully if enable-hw-keyboard is either true or false', () => {
+    const func1 = () => {
+      validator.checkEnableHwKeyboard('true');
+    };
+    expect(func1).not.toThrow();
+
+    const func2 = () => {
+      validator.checkEnableHwKeyboard('false');
+    };
+    expect(func2).not.toThrow();
+  });
+});
+
+describe('enable-logcat validator tests', () => {
+  it('Throws if enable-logcat is not a boolean', () => {
+    const func = () => {
+      validator.checkEnableLogcat('yes');
+    };
+    expect(func).toThrowError(`Input for input.enable-logcat should be either 'true' or 'false'.`);
+  });
+
+  it('Validates successfully if enable-logcat is either true or false', () => {
+    const func1 = () => {
+      validator.checkEnableLogcat('true');
+    };
+    expect(func1).not.toThrow();
+
+    const func2 = () => {
+      validator.checkEnableLogcat('false');
+    };
+    expect(func2).not.toThrow();
+  });
+});
+
+describe('longpress-timeout validator tests', () => {
+  it('Throws if longpress-timeout is not a number', () => {
+    const func = () => {
+      validator.checkLongPressTimeout('abc123');
+    };
+    expect(func).toThrowError(`Unexpected longpress-timeout: 'abc123'.`);
+  });
+
+  it('Throws if longpress-timeout is not an integer', () => {
+    const func = () => {
+      validator.checkLongPressTimeout('123.123');
+    };
+    expect(func).toThrowError(`Unexpected longpress-timeout: '123.123'.`);
+  });
+
+  it('Validates successfully with valid longpress-timeout', () => {
+    const func = () => {
+      validator.checkLongPressTimeout('6061023');
+    };
+    expect(func).not.toThrow();
+  });
+});
+
 describe('emulator-build validator tests', () => {
   it('Throws if emulator-build is not a number', () => {
     const func = () => {
