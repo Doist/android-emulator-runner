@@ -57,6 +57,9 @@ async function run() {
     const ramSize = core.getInput('ram-size');
     console.log(`RAM size: ${ramSize}`);
 
+    const vmHeapSize = core.getInput('vm-heap-size');
+    console.log(`VM heap size: ${vmHeapSize}`);
+
     // SD card path or size used for creating the AVD
     const sdcardPathOrSize = core.getInput('sdcard-path-or-size');
     console.log(`SD card path or size: ${sdcardPathOrSize}`);
@@ -153,6 +156,7 @@ async function run() {
       profile,
       cores,
       ramSize,
+      vmHeapSize,
       sdcardPathOrSize,
       avdName,
       emulatorOptions,
