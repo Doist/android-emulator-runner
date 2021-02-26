@@ -48,6 +48,9 @@ inputs:
   enable-logcat:
     description: Enable reading and saving logcat output to `artifacts/logcat.log`.
     default: 'false'
+  print-config-ini:
+    description: Print config.ini and harware-qemu.ini
+    default: 'false'
   emulator-build:
     description: 'build number of a specific version of the emulator binary to use - e.g. `6061023` for emulator v29.3.0.0'
   working-directory:

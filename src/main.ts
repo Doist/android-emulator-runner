@@ -4,6 +4,7 @@ import {
   checkApiLevel,
   checkTarget,
   checkArch,
+  checkPrintConfigIni,
   checkDisableAnimations,
   checkEmulatorBuild,
   checkDisableSpellchecker,
@@ -90,6 +91,11 @@ async function run() {
     const enableLogcat = enableLogcatInput === 'true';
     console.log(`enable logcat: ${enableLogcat}`);
 
+    const printConfigIniInput = core.getInput('print-config-ini');
+    checkPrintConfigIni(printConfigIniInput);
+    const printConfigIni = printConfigIniInput === 'true';
+    console.log(`print config.ini: ${printConfigIni}`);
+
     // disable spellchecker
     const disableSpellcheckerInput = core.getInput('disable-spellchecker');
     checkDisableSpellchecker(disableSpellcheckerInput);
@@ -165,7 +171,8 @@ async function run() {
       disableAutofill,
       longPressTimeout,
       enableHwKeyboard,
-      enableLogcat
+      enableLogcat,
+      printConfigIni
     );
 
     // execute the custom script

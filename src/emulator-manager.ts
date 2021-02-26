@@ -22,7 +22,8 @@ export async function launchEmulator(
   disableAutofill: boolean,
   longPressTimeout: number,
   enableHwKeyboard: boolean,
-  enableLogcat: boolean
+  enableLogcat: boolean,
+  printConfigIni: boolean
 ): Promise<void> {
   // create a new AVD
   const profileOption = profile.trim() !== '' ? `--device '${profile}'` : '';
@@ -65,6 +66,12 @@ export async function launchEmulator(
       }
     }
   });
+
+  if (printConfigIni) {
+    // hardware-qemu.ini is generated after emulator is started
+    await exec.exec(`sh -c \\"more ~/.android/avd/"${avdName}".avd"/config.ini`);
+    await exec.exec(`sh -c \\"more ~/.android/avd/"${avdName}".avd"/hardware-qemu.ini`);
+  }
 
   // wait for emulator to complete booting
   await waitForDevice();
