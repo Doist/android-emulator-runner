@@ -4,6 +4,7 @@ import {
   checkApiLevel,
   checkTarget,
   checkArch,
+  checkPrintConfigIni,
   checkDisableAnimations,
   checkEmulatorBuild,
   checkDisableSpellchecker,
@@ -57,6 +58,9 @@ async function run() {
     const ramSize = core.getInput('ram-size');
     console.log(`RAM size: ${ramSize}`);
 
+    const vmHeapSize = core.getInput('vm-heap-size');
+    console.log(`VM heap size: ${vmHeapSize}`);
+
     // SD card path or size used for creating the AVD
     const sdcardPathOrSize = core.getInput('sdcard-path-or-size');
     console.log(`SD card path or size: ${sdcardPathOrSize}`);
@@ -86,6 +90,11 @@ async function run() {
     checkEnableLogcat(enableLogcatInput);
     const enableLogcat = enableLogcatInput === 'true';
     console.log(`enable logcat: ${enableLogcat}`);
+
+    const printConfigIniInput = core.getInput('print-config-ini');
+    checkPrintConfigIni(printConfigIniInput);
+    const printConfigIni = printConfigIniInput === 'true';
+    console.log(`print config.ini: ${printConfigIni}`);
 
     // disable spellchecker
     const disableSpellcheckerInput = core.getInput('disable-spellchecker');
@@ -153,6 +162,7 @@ async function run() {
       profile,
       cores,
       ramSize,
+      vmHeapSize,
       sdcardPathOrSize,
       avdName,
       emulatorOptions,
@@ -161,7 +171,8 @@ async function run() {
       disableAutofill,
       longPressTimeout,
       enableHwKeyboard,
-      enableLogcat
+      enableLogcat,
+      printConfigIni
     );
 
     // execute the custom script

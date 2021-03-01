@@ -93,7 +93,8 @@ jobs:
 | `arch` | Optional | `x86` | CPU architecture of the system image - `x86` or `x86_64`. Note that `x86_64` image is only available for API 21+. |
 | `profile` | Optional | N/A | Hardware profile used for creating the AVD - e.g. `Nexus 6`. For a list of all profiles available, run `avdmanager list` and refer to the results under "Available Android Virtual Devices". |
 | `cores` | Optional | N/A | Number of cores to use for the emulator (`hw.cpu.ncore` in config.ini). |
-| `ram-size` | Optional | N/A | Size of RAM to use for this AVD, in KB or MB, denoted with K or M. - e.g. `2048M` |
+| `ram-size` | Optional | N/A | Size of RAM to use for this AVD, in MB (`hw.ramSize` in config.ini). - e.g. `2048` |
+| `vm-heap-size` | Optional | N/A | Size of VM heap for apps in this AVD, in MB (`vm.heapSize` in config.ini). - e.g. `512` |
 | `sdcard-path-or-size` | Optional | N/A | Path to the SD card image for this AVD or the size of a new SD card image to create for this AVD, in KB or MB, denoted with K or M. - e.g. `path/to/sdcard`, or `1000M`. |
 | `avd-name` | Optional | `test` | Custom AVD name used for creating the Android Virtual Device. |
 | `emulator-options` | Optional | See below | Command-line options used when launching the emulator (replacing all default options) - e.g. `-no-window -no-snapshot -camera-back emulated`. |
@@ -103,6 +104,7 @@ jobs:
 | `longpress-timeout` | Optional | 500 | Longpress timeout in milliseconds. |
 | `enable-hw-keyboard` | Optional | `false` | Whether to enable the hw keyboard and disable soft keyboard - `true` or `false`. |
 | `enable-logcat` | Optional | `false` | Whether to read and save logcat output to `artifacts/logcat.log` |
+| `print-config-ini` | Optional | `false` | Whether to print `config.ini` and `hardware-qemu.ini` upon emulator start. |
 | `emulator-build` | Optional | N/A | Build number of a specific version of the emulator binary to use e.g. `6061023` for emulator v29.3.0.0. |
 | `working-directory` | Optional | `./` | A custom working directory - e.g. `./android` if your root Gradle project is under the `./android` sub-directory within your repository. |
 | `ndk` | Optional | N/A | Version of NDK to install - e.g. `21.0.6113669` |

@@ -53,6 +53,12 @@ export function checkEnableLogcat(enableLogcat: string): void {
   }
 }
 
+export function checkPrintConfigIni(printConfigIni: string): void {
+  if (!isValidBoolean(printConfigIni)) {
+    throw new Error(`Input for input.print-config-ini should be either 'true' or 'false'.`);
+  }
+}
+
 export function checkLongPressTimeout(timeout: string): void {
   if (isNaN(Number(timeout)) || !Number.isInteger(Number(timeout))) {
     throw new Error(`Unexpected longpress-timeout: '${timeout}'.`);

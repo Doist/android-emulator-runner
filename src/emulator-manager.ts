@@ -13,6 +13,7 @@ export async function launchEmulator(
   profile: string,
   cores: string,
   ramSize: string,
+  vmHeapSize: string,
   sdcardPathOrSize: string,
   avdName: string,
   emulatorOptions: string,
@@ -21,7 +22,8 @@ export async function launchEmulator(
   disableAutofill: boolean,
   longPressTimeout: number,
   enableHwKeyboard: boolean,
-  enableLogcat: boolean
+  enableLogcat: boolean,
+  printConfigIni: boolean
 ): Promise<void> {
   // create a new AVD
   const profileOption = profile.trim() !== '' ? `--device '${profile}'` : '';
@@ -37,6 +39,10 @@ export async function launchEmulator(
 
   if (ramSize) {
     await exec.exec(`sh -c \\"printf 'hw.ramSize=${ramSize}\n' >> ~/.android/avd/"${avdName}".avd"/config.ini`);
+  }
+
+  if (vmHeapSize) {
+    await exec.exec(`sh -c \\"printf 'vm.heapSize=${vmHeapSize}\n' >> ~/.android/avd/"${avdName}".avd"/config.ini`);
   }
 
   if (enableHwKeyboard) {
@@ -60,6 +66,12 @@ export async function launchEmulator(
       }
     }
   });
+
+  if (printConfigIni) {
+    // hardware-qemu.ini is generated after emulator is started
+    await exec.exec(`sh -c \\"more ~/.android/avd/"${avdName}".avd"/config.ini`);
+    await exec.exec(`sh -c \\"more ~/.android/avd/"${avdName}".avd"/hardware-qemu.ini`);
+  }
 
   // wait for emulator to complete booting
   await waitForDevice();
